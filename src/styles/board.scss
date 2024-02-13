@@ -1,3 +1,15 @@
-.row {
-    display: flex;  
+.board {
+	background-color: #1E1E24;
+	border-radius: 3px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
+
+.mine-counter{
+	margin-left: auto;
+	margin-bottom: 6px;
+}
+
+
+

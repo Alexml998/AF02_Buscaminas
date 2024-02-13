@@ -7,34 +7,23 @@ import '../styles/cell.scss';
 export default function Cell({ values, updateFlag, revealCell }) {
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
-    const [isFlagged, setIsFlagged] = useState(false);
     const [isDefused, setIsDefused] = useState(false);
 
     useEffect(() => {
-        console.log("useEffect ejecutado");
-        if (values.defused) {
-            setIsDefused(true);
-        } else {
-            setIsDefused(false)
-        }
+        // Comprueba si la celda está desactivada
+        setIsDefused(values.defused);
     }, [values.defused]);
 
     const handleClick = () => {
         if (!values.flagged) {
-            revealCell(values.row, values.column);
-            setIsDefused(true);
+            revealCell(values.row, values.column)
         }
     };
-
-    const cellClasses = "cell" + 
-    (isDefused ? " is-empty" : '') +
-    (isFlagged ? " is-flagged" : '')
 
     const handleRightClick = (e) => {
         e.preventDefault();
         if (!isMobile) {
             updateFlag(values.row, values.column);
-            setIsFlagged((current) => !current);
         }
     };
 
@@ -42,11 +31,13 @@ export default function Cell({ values, updateFlag, revealCell }) {
         () => {
             if (isMobile) {
                 updateFlag(values.row, values.column);
-                setIsFlagged((current) => !current);
             }
         },
         { threshold: 700 }
     );
+
+    const valueColorClassName = isDefused && values.surroundingMinesCount > 0 ? ` color-${values.surroundingMinesCount}` : '' ;
+    const cellClasses = `cell${values.flagged ? ' is-flagged' : ''}${isDefused ? ' is-defused' : ''}${values.exploded ? ' has-mine' : ''}${valueColorClassName}`;
 
     return (
         <div
@@ -54,7 +45,7 @@ export default function Cell({ values, updateFlag, revealCell }) {
             onClick={handleClick}
             {...(isMobile ? handleLongClick : { onContextMenu: handleRightClick })}
         >
-            {isFlagged ? <img /> : null}
+            {isDefused && values.surroundingMinesCount != 0 ? <>{values.surroundingMinesCount}</> : ''}
         </div>
     );
 }

@@ -1,37 +1,50 @@
-/*
-Paleta de colores
 
-#dad7cd
-#a3b18a
-#588157
-#3a5a40
-#344e41
-*/
+$hidden-cell-color: #588157;
+$defused-cell-color: #a3b18a;
+$exploded-cell-color: #832232;
 
 
 .cell {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $hidden-cell-color;
+  color: #fff;
+  font-weight: 600;
   margin: 1px;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #344e41;
-  background-color: #588157;
   border-radius: 3px;
-  place-items: center;
+  width: 23px;
+  height: 23px;
+
+
   cursor: pointer;
-  font-size: 48px;
-}
-img {
-  content: url(../assets/flag.png);
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-  display: none;
-}
-.is-flagged img {
-  display: block;
+  transition: background-color 0.2s;
+
+  &.is-flagged {
+    background-image: url("../assets/flag.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &.is-defused {
+    pointer-events: none;
+    background-color: $defused-cell-color;
+  }
+
+  &.has-mine {
+    background-image: url("../assets/bomb.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $exploded-cell-color;
+  }
 }
 
-.is-empty {
-  background-color: #a3b18a;
+@for $i from 1 through 8 {
+  .color-#{$i} {
+    color: nth(#0077b6 #137547 #c1121f #01497c #6a040f #00a896 #000 #7f7f7f, $i);
+  }
 }
+

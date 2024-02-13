@@ -20,7 +20,7 @@ class BoardCell{
      * @returns this
      */
     flag(){
-        this.flagged = true;
+        this.flagged = !this.flagged;
 
         return this;
     }
